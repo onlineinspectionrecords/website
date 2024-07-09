@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #570000;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 150px 100px rgba(0, 0, 0, 0.15);box-shadow: 0 150px 100px rgba(0, 0, 0, 0.15);box-shadow: 0 150px 100px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .container .title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .container .title::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(to top, rgb(228, 3, 3), rgb(88, 1, 1))
+        }
+
+        .details {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .details span {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            margin-top: 20px;
+        }
+
+        .button input {
+            height: 45px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgb(179, 3, 3);
+        }
+
+        /* .button input:hover {
+            background: linear-gradient(to top, rgb(228, 3, 3), rgb(88, 1, 1));
+        } */
+
+        #vin-number{
+            color: red;
+        }
+
+        .F1{
+            font-weight: 300;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Vehicle Report</div>
+        <div class="details">
+            <p id="report-message">We have found detailed information for <span id="vin-number"></span></p>
+            <p>Here are the basic details:</p>
+            <h3>Make: <span id="make" class="F1"></span></h3>
+            <h3>Model: <span id="model" class="F1"></span></h3>
+            <h3>Year: <span id="year" class="F1"></span></h3>
+            <h3>Product Type: <span id="type" class="F1"></span></h3>
+            <h3>Body Type: <span id="body" class="F1"></span></h3>
+        </div>
+        <div class="button">
+            <input type="button" value="Get Full Report" onclick="redirectToPayment()">
+        </div>
+        <p>NOTE: Information availability differs by vehicle. Not all reports may include every record.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const vehicleData = JSON.parse(localStorage.getItem('vehicleData'));
+
+            if (vehicleData) {
+                document.getElementById('vin-number').textContent = vehicleData.vin;
+                document.getElementById('make').textContent = vehicleData.make || 'N/A';
+                document.getElementById('model').textContent = vehicleData.model || 'N/A';
+                document.getElementById('year').textContent = vehicleData.year || 'N/A';
+                document.getElementById('type').textContent = vehicleData.type || 'N/A';
+                document.getElementById('body').textContent = vehicleData.body || 'N/A';
+            } else {
+                document.getElementById('report-message').textContent = 'No vehicle data found. Please go back and try again.';
+            }
+        });
+
+        function redirectToPayment() {
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+
+</html>

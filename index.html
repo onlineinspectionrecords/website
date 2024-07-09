@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Online Inspection Records</title>
+  <meta name="title" content="Online Inspection Records">
+  <meta name="description" content="Get a Complete Detailed Report of your Vehicle!">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Mulish&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - material icon font
+  -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@40,600,0,0" />
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="./assets/images/hero-banner.png">
+  <link rel="preload" as="image" href="./assets/images/hero-bg.jpg">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header">
+    <div class="container" style="padding: 25px 5px;">
+
+      <h1 id="messi" style="color: white; font-weight: bolder;">Online Inspection Records</h1>
+
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+
+          <li>
+            <a href="#home" class="navbar-link">Home</a>
+          </li>
+
+          <li>
+            <a href="#about" class="navbar-link">About</a>
+          </li>
+
+          <li>
+            <a href="#price" class="navbar-link">Pricing</a>
+          </li>
+
+          <li>
+            <a href="#foot" class="navbar-link">Contact</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- <a href="#" class="btn btn-primary">
+        <span class="span">Get a Quote</span>
+
+        <span class="material-symbols-rounded">arrow_forward</span>
+      </a> -->
+
+      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+        <span class="nav-toggle-icon icon-1"></span>
+        <span class="nav-toggle-icon icon-2"></span>
+        <span class="nav-toggle-icon icon-3"></span>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section id="home" class="hero has-bg-image" aria-label="home"
+        style="background-color: #570000;">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="section-subtitle :dark">For United States and Canada only</p>
+
+            <h1 class="h1 section-title" style="font-weight: 700;">Get Your Car's Full History with Just a VIN.</h1>
+
+            <p class="section-text" style="font-weight: 500;">
+              Empowering Your Journey with Trusted Vehicle History Reports.
+            </p>
+
+            <a href="form.html" class="btn" style="background-color: white;">
+              <span class="span" style="color: red; font-weight: bold;">Get Report</span>
+
+              <span class="material-symbols-rounded" style="color: red;">arrow_forward</span>
+            </a>
+
+          </div>
+
+          <figure class="hero-banner" style="--width: 1228; --height: 789;">
+            <img src="./assets/images/hero-banner.png" width="1228" height="789" alt="red motor vehicle"
+              class="move-anim">
+          </figure>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SERVICE
+      -->
+
+      <section id="service" class="section service has-bg-image" aria-labelledby="service-label"
+        style="background-image: url('./assets/images/service-bg.jpg')">
+        <div class="container">
+
+          <p class="section-subtitle :light" id="service-label">Our service</p>
+
+          <h2 class="h2 section-title">What Details are Contained in a Vehicle History Report?</h2>
+
+          <ul class="service-list">
+
+            <li>
+              <div class="service-card">
+
+                <figure class="card-icon">
+                  <img src="./assets/images/services-1.png" width="110" height="110" loading="lazy" alt="Engine Repair">
+                </figure>
+
+                <h3 class="h3 card-title">Vehicle Usage</h3>
+
+                <p class="card-text">
+                  Our report assesses past vehicle usage. To check if it was a rental or for personal use.
+                </p>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <figure class="card-icon">
+                  <img src="./assets/images/services-2.png" width="110" height="110" loading="lazy" alt="Brake Repair">
+                </figure>
+
+                <h3 class="h3 card-title">Vehicle Ownership History</h3>
+
+                <p class="card-text">
+                  Easily verify vehicle history using our report, which includes details about past vehicle proprietors,
+                  alongside ownership tenure and whereabouts.
+                </p>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <figure class="card-icon">
+                  <img src="./assets/images/services-3.png" width="110" height="110" loading="lazy" alt="Tire Repair">
+                </figure>
+
+                <h3 class="h3 card-title">Accident History</h3>
+
+                <p class="card-text">
+                  Buying a pre-owned car? Uncover its accident history with our detailed reports.
+                </p>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <figure class="card-icon">
+                  <img src="./assets/images/services-4.png" width="110" height="110" loading="lazy"
+                    alt="Battery Repair">
+                </figure>
+
+                <h3 class="h3 card-title">Stolen Vehicle Check</h3>
+
+                <p class="card-text">
+                  Check the vehicle's theft history before buying. Verifying records protects you from legal issues and
+                  ensures your investment is secure.
+                </p>
+
+              </div>
+            </li>
+
+            <li class="service-banner">
+              <img src="./assets/images/services-5.png" width="646" height="380" loading="lazy" alt="Red Car"
+                class="move-anim">
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <figure class="card-icon">
+                  <img src="./assets/images/services-6.png" width="110" height="110" loading="lazy"
+                    alt="Steering Repair">
+                </figure>
+
+                <h3 class="h3 card-title">Odometer Rollback</h3>
+
+                <p class="card-text">
+                  Each year, over 450,000 cars in North America are sold with inaccurate odometer readings. Our vehicle
+                  history report helps you verify true mileage and prevent rollback, ensuring confidence in your
+                  purchase.
+                </p>
+
+              </div>
+            </li>
+
+          </ul>
+
+          <p style="padding: 25px;">and many more details..</p>
+
+          <a href="form.html" class="btn">
+            <span class="span" style="font-weight: bold;">Get Your Report Now</span>
+
+            <span class="material-symbols-rounded" style="font-weight: bold;">arrow_forward</span>
+          </a>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section id="about" class="section about has-before" aria-labelledby="about-label"
+        style="background-color: #570000;">
+        <div class="container">
+
+          <figure class="about-banner">
+          </figure>
+
+          <div class="about-content">
+
+            <p class="section-subtitle :dark">About Us</p>
+
+            <h2 class="h2 section-title" style="font-size: 30px; padding: 10px 0px;">Your Trusted Source for Vehicle History.</h2>
+
+            <p class="section-text">
+              At Online Inspection Records, we provide accurate and comprehensive vehicle history reports to help you make
+              informed buying decisions. From ownership history to accident records and odometer accuracy, our reports
+              give you the peace of mind you need to buy with confidence. Trust us to ensure your automotive investment
+              is safe and secure.
+            </p>
+
+            <!-- <p class="section-text">
+              Reprehenderit qui in ea volu velit esse quam nihil moe stiae consequatur, vel illum eui.
+            </p> -->
+
+            <ul class="about-list" style="padding: 10px;">
+
+              <li class="about-item">
+                <p>
+                  <strong class="display-1 strong">1K+</strong> Happy Clients
+                </p>
+              </li>
+
+              <li class="about-item">
+                <p>
+                  <strong class="display-1 strong">15+</strong> Checkpoints
+                </p>
+              </li>
+
+              <li class="about-item">
+                <p>
+                  <strong class="display-1 strong">4.87</strong> Rating
+                </p>
+              </li>
+
+              <li class="about-item">
+                <p>
+                  <strong class="display-1 strong">99.9%</strong> Accuracy Rate
+                </p>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #WORK
+      -->
+
+      <section class="section__container price__container" id="price"
+        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <p class="section-subtitle :light" id="service-label">Our Pricing Plan's</p>
+        <p class="section__description">
+          We offer a range of affordable and flexible pricing options.
+        </p>
+        <div class="price__grid">
+          <div class="price__card">
+            <h4>ONE REPORT</h4>
+            <h3><sup>$</sup>24.99</h3>
+            <h4 style="color: red; margin-bottom: 10px;">Report Includes</h4>
+            <p>Complete Report for One Vehicle</p>
+            <p>Report Never Expires</p>
+            <p>Detailed Vehicle Information</p>
+            <p>History Verification</p>
+            <p>Owner History</p>
+            <p>Sequential Number</p>
+          </div>
+          <div class="price__card">
+            <h4>THREE REPORTS</h4>
+            <h3><sup>$</sup>39.99</h3>
+            <h4 style="color: red; margin-bottom: 10px;">Report Includes</h4>
+            <p>Complete Report for Three Vehicle</p>
+            <p>Report Never Expires</p>
+            <p>Detailed Vehicle Information</p>
+            <p>History Verification</p>
+            <p>Owner History</p>
+            <p>Sequential Number</p>
+          </div>
+          <div class="price__card">
+            <h4>FIVE REPORTS</h4>
+            <h3><sup>$</sup>54.99</h3>
+            <h4 style="color: red; margin-bottom: 10px;">Report Includes</h4>
+            <p>Complete Report for Five Vehicles</p>
+            <p>Report Never Expires</p>
+            <p>Detailed Vehicle Information</p>
+            <p>History Verification</p>
+            <p>Owner History</p>
+            <p>Sequential Number</p>
+          </div>
+        </div>
+
+        <a href="form.html" class="btn" style="margin-top: 50px; display: inline-block;">
+          <span class="span">Get Your Report Now</span>
+
+          <span class="material-symbols-rounded">arrow_forward</span>
+        </a>
+
+      </section>
+
+      <section id="reviews" style="background-color: #570000;">
+        <div class="wrapper">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <p class="section-subtitle :dark" style="font-size: large;">Client's Testimonial</p>
+              </div>
+              <div class="col-sm-12">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="3000">
+      
+                      <div class="content text-center">
+                        <div class="icon-area animated zoomIn" style="animation-delay: 1s">
+                          <i class="fa fa-quote-right"></i>
+                        </div>
+                        <div class="img-area animated zoomIn" style="animation-delay: 2s">
+                          <img src="img/1.jpg" alt="">
+                        </div>
+                        <p class="paragraph">This website was recommended by several different articles, so I gave it a try while my wife and I searched for a used car. The reports are less expensive than Carfax, but far superior to other options I have tried. The information provided is everything you would want to know....</p><!-- lorem35 -->
+                        <h5 class="naam">Abhishek Verma</h5>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                      <div class="icon-area animated zoomIn" style="animation-delay: 1s">
+                        <i class="fa fa-quote-right"></i>
+                      </div>
+                      <div class="img-area animated zoomIn" style="animation-delay: 2s">
+                        <img src="img/2.jpg" alt="">
+                      </div>
+                      <div class="content text-center">
+                        <p class="paragraph">Very fast feedback on the vin number excellent service
+                          Got all the information needed to make sure I was buying the right vehicle.</p>
+      
+                        <h5 class="naam">Ivan Dmitriev</h5>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                      <div class="icon-area animated zoomIn" style="animation-delay: 1s">
+                        <i class="fa fa-quote-right"></i>
+                      </div>
+                      <div class="img-area animated zoomIn" style="animation-delay: 2s">
+                        <img src="img/4.jpg" alt="">
+                      </div>
+                      <div class="content text-center">
+                        <p class="paragraph">There is little to no information out there on the original equipment that comes on a used vehicle you are trying to buy. To finally find a website was amazing. The indie for the car I’m looking at was spot on to what I needed to know. More than the used dealership was able to provide to me.</p>
+      
+                        <h5 class="naam">Keith Williams</h5>
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 
+    - #FOOTER
+  -->
+
+      <footer id="foot" class="footer">
+
+        <div class="footer-top section">
+          <div class="container">
+
+            <div class="footer-brand">
+
+              <!-- <a href="#" class="logo">
+            <img src="./assets/images/logo.png" width="128" height="63" alt="autofix home">
+          </a> -->
+
+              <p class="footer-text">
+                Empowering Your Journey with Trusted Vehicle History Reports.
+              </p>
+
+              <ul class="social-list">
+
+                <li>
+                  <a href="#" class="social-link">
+                    <img src="./assets/images/facebook.svg" alt="facebook">
+                  </a>
+                </li>
+
+                <li>
+                  <a href="#" class="social-link">
+                    <img src="./assets/images/instagram.svg" alt="instagram">
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+
+            <ul class="footer-list">
+
+              <li>
+                <p class="h3">Links</p>
+              </li>
+
+              <li>
+                <a href="#home" class="p">Home</a>
+              </li>
+
+              <li>
+                <a href="#about" class="p">About</a>
+              </li>
+
+              <li>
+                <a href="#price" class="p">Pricing</a>
+              </li>
+
+              <li>
+                <a href="#foot" class="p">Contact</a>
+              </li>
+
+            </ul>
+
+            <ul class="footer-list">
+
+              <li>
+                <p class="h3">Contact Info</p>
+              </li>
+
+              <li>
+                <a href="mailto:info@autofix.com" class="footer-link">
+                  <span class="material-symbols-rounded">mail</span>
+
+                  <span class="span">onlineinspectionrecords@gmail.com</span>
+                </a>
+              </li>
+
+              <li>
+                <address class="footer-link address">
+                  <span class="material-symbols-rounded">location_on</span>
+
+                  <span class="span">21 King Street Melbourne, 3000, United States</span>
+                </address>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <img src="./assets/images/footer-shape-3.png" width="637" height="173" loading="lazy" alt="Shape"
+            class="shape shape-3 move-anim">
+
+        </div>
+
+        <div class="footer-bottom">
+          <div class="container">
+
+            <p class="copyright">Copyright 2024. Online Inspection Records, All Rights Reserved.</p>
+
+            <img src="./assets/images/footer-shape-2.png" width="778" height="335" loading="lazy" alt="Shape"
+              class="shape shape-2">
+
+            <img src="./assets/images/footer-shape-1.png" width="805" height="652" loading="lazy" alt="Red Car"
+              class="shape shape-1 move-anim">
+
+          </div>
+        </div>
+
+      </footer>
+
+
+
+
+
+      <!-- 
+    - custom js link
+  -->
+      <script src="./assets/js/script.js"></script>
+
+</body>
+
+</html>

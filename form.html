@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #570000;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 150px 100px rgba(0, 0, 0, 0.15);
+        }
+
+        .container .title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .container .title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(to top, rgb(228, 3, 3), rgb(88, 1, 1));
+        }
+
+        .content form .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+
+        form .user-details .input-box {
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+        }
+
+        form .input-box span.details {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .user-details .input-box input {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid {
+            border-color: #9b59b6;
+        }
+
+        .button {
+            height: 45px;
+            margin: 35px 0;
+        }
+
+        .button input {
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgb(179, 3, 3);
+        }
+
+        /* .button input:hover {
+            background: linear-gradient(to top, rgb(228, 3, 3), rgb(88, 1, 1));
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Enter Details</div>
+        <div class="content">
+            <form id="vin-form">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Name</span>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">VIN Number</span>
+                        <input type="text" id="vin" required>
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Get Report">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const apiPrefix = "https://api.vindecoder.eu/3.2";
+        const apiKey = "41bd9dfd4a3d"; // Your API key
+        const secretKey = "1463818e23"; // Your secret key
+        const id = "decode";
+        let doc;
+
+        document.getElementById('vin-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const vin = document.getElementById('vin').value.toUpperCase();
+
+            const controlSum = CryptoJS.SHA1(`${vin}|${id}|${apiKey}|${secretKey}`)
+                .toString(CryptoJS.enc.Hex)
+                .substring(0, 10);
+
+            const url = `${apiPrefix}/${apiKey}/${controlSum}/decode/${vin}.json`;
+
+            axios.get(url)
+                .then(response => {
+                    if (response.data) {
+                        console.log('API Response:', response.data);
+
+                        // Extracting data from API response
+                        const apiData = response.data;
+
+                        // Constructing vehicleData object
+                        const vehicleData = {
+                            name: name,
+                            email: email,
+                            vin: vin,
+                            make: getValue(apiData, 'Make'),
+                            model: getValue(apiData, 'Model'),
+                            year: getValue(apiData, 'Model Year'),
+                            type: getValue(apiData, 'Product Type'),
+                            body: getValue(apiData, 'Body'),
+                            series: getValue(apiData, 'Series'),
+                            sequentialNumber: getValue(apiData, 'Sequential Number'),
+                            engineDisplacement: getValue(apiData, 'Engine Displacement (ccm)'),
+                            fuelType: getValue(apiData, 'Fuel Type - Primary'),
+                            fuelConsumption: getValue(apiData, 'Fuel Consumption Combined (l/100km)'),
+                            manufacturer: getValue(apiData, 'Manufacturer'),
+                            manufacturerAddress: getValue(apiData, 'Manufacturer Address'),
+                            plantCity: getValue(apiData, 'Plant City'),
+                            plantCountry: getValue(apiData, 'Plant Country'),
+                            plantCompany: getValue(apiData, 'Plant Company'),
+                            productionStarted: getValue(apiData, 'Production Started'),
+                            productionStopped: getValue(apiData, 'Production Stopped')
+                        };
+
+                        console.log('Vehicle Data:', vehicleData);
+
+                        var vitalInfo = [
+                            { label: 'Make', value: vehicleData.make },
+                            { label: 'Model', value: vehicleData.model },
+                            { label: 'Model Year', value: vehicleData.year },
+                            { label: 'Product Type', value: vehicleData.type },
+                            { label: 'Body', value: vehicleData.body },
+                            { label: 'Series', value: vehicleData.series },
+                            { label: 'Sequential Number', value: vehicleData.sequentialNumber }
+                        ];
+
+                        var engineInfo = [
+                            { label: 'Engine Displacement', value: vehicleData.engineDisplacement },
+                            { label: 'Fuel Type', value: vehicleData.fuelType },
+                            { label: 'Fuel Consumption', value: vehicleData.fuelConsumption }
+                        ];
+
+                        var manufacturingInfo = [
+                            { label: 'Manufacturer', value: vehicleData.manufacturer },
+                            { label: 'Manufacturer Address', value: vehicleData.manufacturerAddress },
+                            { label: 'Plant City', value: vehicleData.plantCity },
+                            { label: 'Plant Country', value: vehicleData.plantCountry },
+                            { label: 'Plant Company', value: vehicleData.plantCompany },
+                            { label: 'Production Started', value: vehicleData.productionStarted },
+                            { label: 'Production Stopped', value: vehicleData.productionStopped }
+                        ];
+
+                        var remainingDetails = apiData.decode.filter(item =>
+                            !vitalInfo.some(vital => vital.label === item.label) &&
+                            !engineInfo.some(engine => engine.label === item.label) &&
+                            !manufacturingInfo.some(manufacturing => manufacturing.label === item.label)
+                        );
+
+                        function addTableToPDF(doc, data, x, y) {
+                            if (!Array.isArray(data)) {
+                                console.error('Data is not an array:', data);
+                                return;
+                            }
+
+                            doc.autoTable({
+                                startY: y,
+                                head: [['Label', 'Value']],
+                                body: data.map(item => [item.label, item.value]),
+                                margin: { top: 20 },
+                                didDrawPage: function (data) {
+                                    doc.setFontSize(10);
+                                    doc.text('Page ' + doc.internal.getNumberOfPages(), data.settings.margin.left, doc.internal.pageSize.height - 10);
+                                }
+                            });
+                        }
+
+
+                        // Storing vehicleData in localStorage
+                        localStorage.setItem('vehicleData', JSON.stringify(vehicleData));
+
+                        // Generating PDF report
+                        const { jsPDF } = window.jspdf;
+                        doc = new jsPDF();
+
+                        // Set PDF background color to white
+                        doc.setFillColor(255, 255, 255);
+                        doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
+                        // Add logo image
+                        const img = new Image();
+                        img.src = 'L2.png'; // Replace with your logo file name
+                        img.onload = function () {
+                            doc.addImage(img, 'PNG', 80, 10, 50, 50); // Adjust position and size as needed
+
+                            // Calculate center positions
+                            const pageWidth = doc.internal.pageSize.width;
+                            const textWidth = doc.getStringUnitWidth('Vehicle History Report') * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                            const textX = (pageWidth - textWidth) / 2;
+
+                            // Add main heading
+                            doc.setFontSize(24);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Vehicle History Report', 105, 70, { align: 'center' });
+
+
+                            // Add Reported Date heading centered
+                            doc.setFontSize(16);
+                            doc.setTextColor(80, 80, 80);
+                            const reportedDate = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                            doc.text('Reported Date: ' + reportedDate, pageWidth / 2, 95, { align: 'center' });
+
+                            // Add vehicle details centered
+                            const detailsX = pageWidth / 2;
+                            // doc.text(`Vehicle Name: ${vehicleData.make}`, detailsX, 110, { align: 'center' });
+                            doc.text(`VIN Number: ${vehicleData.vin}`, detailsX, 110, { align: 'center' });
+
+                            // Add tables for different sections of data
+                            // addVitalInformationTable(vehicleData);
+                            // addEngineInformationTable(vehicleData);
+                            // addManufacturingDetailsTable(vehicleData);
+                            // addBodyDetailsTable(apiData, vehicleData);
+
+                            // Add footer
+                            addFooter();
+
+                            // Add Vital Information heading and table
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Vital Information', pageWidth / 2, 120, { align: 'center' });
+                            addTableToPDF(doc, vitalInfo, pageWidth / 2, 130);
+
+                            // Add Engine Information heading and table
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Engine Information', pageWidth / 2, doc.autoTable.previous.finalY + 10, { align: 'center' });
+                            addTableToPDF(doc, engineInfo, pageWidth / 2, doc.autoTable.previous.finalY + 20);
+
+                            // Add Manufacturing Details heading and table
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Manufacturing Details', pageWidth / 2, doc.autoTable.previous.finalY + 10, { align: 'center' });
+                            addTableToPDF(doc, manufacturingInfo, pageWidth / 2, doc.autoTable.previous.finalY + 20);
+
+                            // Add Body Details heading and table
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Body Details', pageWidth / 2, doc.autoTable.previous.finalY + 10, { align: 'center' });
+                            addTableToPDF(doc, remainingDetails, pageWidth / 2, doc.autoTable.previous.finalY + 20);
+
+                            // Add Theft Record section
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 0, 0);
+                            doc.text('Theft Record', pageWidth / 2, doc.autoTable.previous.finalY + 10, { align: 'center' });
+                            doc.setFontSize(12);
+                            doc.setTextColor(80, 80, 80);
+                            doc.text('No Theft Record Found', pageWidth / 2, doc.autoTable.previous.finalY + 20, { align: 'center' });
+
+                            // Add footer
+                            doc.setFontSize(10);
+                            const footerText = "©2024 Cars - All Rights Reserved.";
+                            doc.text(footerText, pageWidth / 2, doc.internal.pageSize.height - 10, { align: 'center' });
+
+
+                            // Save PDF and redirect to show.html
+                            const blob = doc.output('blob');
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const base64data = reader.result;
+                                localStorage.setItem('userName', name);
+                                localStorage.setItem('userEmail', email);
+                                localStorage.setItem('pdfBlob', base64data);
+                                localStorage.setItem('VIN', vin);
+                                window.location.href = 'show.html';
+                            };
+                            reader.readAsDataURL(blob);
+                        };
+                    } else {
+                        console.log('No data found for this VIN.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data from API:', error);
+                });
+        });
+
+        function getValue(apiData, label) {
+            return apiData.decode.find(item => item.label === label)?.value || 'N/A';
+        }
+
+        function addVitalInformationTable(vehicleData) {
+            let startY = 160; // Adjust starting Y position
+            const tableData = [
+                { label: 'Make', value: vehicleData.make },
+                { label: 'Model', value: vehicleData.model },
+                { label: 'Model Year', value: vehicleData.year },
+                { label: 'Product Type', value: vehicleData.type },
+                { label: 'Body', value: vehicleData.body },
+                { label: 'Series', value: vehicleData.series },
+                { label: 'Sequential Number', value: vehicleData.sequentialNumber }
+            ];
+
+            addTableToPDF(tableData, startY);
+        }
+
+        function addEngineInformationTable(vehicleData) {
+            let startY = doc.autoTable.previous.finalY + 10 || 10; // Start after previous table or at top
+            const tableData = [
+                { label: 'Engine Displacement', value: vehicleData.engineDisplacement },
+                { label: 'Fuel Type', value: vehicleData.fuelType },
+                { label: 'Fuel Consumption', value: vehicleData.fuelConsumption }
+            ];
+
+            addTableToPDF(tableData, startY);
+        }
+
+        function addManufacturingDetailsTable(vehicleData) {
+            let startY = doc.autoTable.previous.finalY + 10 || 10; // Start after previous table or at top
+            const tableData = [
+                { label: 'Manufacturer', value: vehicleData.manufacturer },
+                { label: 'Manufacturer Address', value: vehicleData.manufacturerAddress },
+                { label: 'Plant City', value: vehicleData.plantCity },
+                { label: 'Plant Country', value: vehicleData.plantCountry },
+                { label: 'Plant Company', value: vehicleData.plantCompany },
+                { label: 'Production Started', value: vehicleData.productionStarted },
+                { label: 'Production Stopped', value: vehicleData.productionStopped }
+            ];
+
+            addTableToPDF(tableData, startY);
+        }
+
+        function addBodyDetailsTable(apiData, vehicleData) {
+            let startY = doc.autoTable.previous.finalY + 10 || 10; // Start after previous table or at top
+
+            const remainingDetails = apiData.decode.filter(item =>
+                !Object.keys(vehicleData).includes(item.label) // Exclude already used data
+            ).map(item => ({ label: item.label, value: item.value }));
+
+            addTableToPDF(remainingDetails, startY);
+        }
+
+        function addTableToPDF(data, startY) {
+            const columns = ['Label', 'Value'];
+            const rows = data.map(item => [item.label, item.value]);
+
+            doc.autoTable({
+                startY: startY,
+                head: [columns],
+                body: rows,
+                theme: 'grid',
+                margin: { top: 30 },
+                styles: { overflow: 'linebreak' },
+                columnStyles: {
+                    0: { fontStyle: 'bold' },
+                    1: {}
+                },
+                headStyles: { fillColor: [179, 3, 3] },
+                alternateRowStyles: { fillColor: [235, 235, 235] }
+            });
+        }
+
+        function addFooter() {
+            const footerText = "©2024 Cars - All Rights Reserved.";
+            doc.setFontSize(10);
+            doc.setTextColor(80, 80, 80);
+            doc.text(footerText, 105, doc.internal.pageSize.height - 10, { align: 'center' });
+        }
+    </script>
+</body>
+
+</html>
