@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #570000;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 150px 100px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .container .title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* .container .title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(to top, rgb(228, 3, 3), rgb(88, 1, 1))
+        } */
+
+        .button {
+            height: 50px;
+            width: 150px;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgb(179, 3, 3);
+            margin: 20px;
+        }
+
+        /* .button:hover {
+            background: linear-gradient(to top, rgb(200, 0, 0), rgb(70, 0, 0));
+        } */
+
+        #btns{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        @media only screen and (max-width: 600px){
+            #btns{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+    </style>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        emailjs.init("xt52uBgkPaElkFYxE");
+
+        function sendEmail() {
+            const name = localStorage.getItem('userName'); // Fetch user's name from localStorage
+            const email = localStorage.getItem('userEmail'); // Fetch user's email from localStorage
+            const pdfData = localStorage.getItem('pdfBlob'); // Fetch PDF blob from localStorage
+            const vin = localStorage.getItem('VIN');
+
+            const formData = {
+                name: name,
+                email: email,
+                vin: vin
+            };
+
+            // Send email using EmailJS
+            emailjs.send("service_7r1ab4o", "template_qif2jqs", formData)
+                .then(function (response) {
+                    console.log("Email sent successfully", response);
+                }, function (error) {
+                    console.error("Email send error:", error);
+                    alert("Email send error: " + error.text);
+                });
+        }
+
+        function redirectToPayment1() {
+            // Send the email
+            sendEmail();
+
+            // Redirect to the payment page after a short delay (2 seconds)
+            setTimeout(function() {
+                window.location.href = "https://pay.sadabiz.co.uk/invoice/45bb7482-d7dc-4eae-a507-f97371a402ae"; // Replace with your actual payment page URL
+            }, 2000);
+        }
+        function redirectToPayment2() {
+            // Send the email
+            sendEmail();
+
+            // Redirect to the payment page after a short delay (2 seconds)
+            setTimeout(function() {
+                window.location.href = "https://pay.sadabiz.co.uk/invoice/05c4be36-416a-43db-9b14-f3602d7b7fbe"; // Replace with your actual payment page URL
+            }, 2000);
+        }
+        function redirectToPayment3() {
+            // Send the email
+            sendEmail();
+
+            // Redirect to the payment page after a short delay (2 seconds)
+            setTimeout(function() {
+                window.location.href = "https://pay.sadabiz.co.uk/invoice/03dc4cea-1255-416a-9578-70abb2ef7b83"; // Replace with your actual payment page URL
+            }, 2000);
+        }
+
+        function downloadPDF() {
+            const pdfData = localStorage.getItem('pdfBlob');
+            if (pdfData) {
+                const link = document.createElement('a');
+                link.href = pdfData;
+                link.download = 'Vehicle-Report.pdf';
+                link.click();
+            } else {
+                alert('No PDF available to download.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Purchase Full Report To Uncover More Information</h1>
+        <div id="btns">
+            <div id="one">
+                <button class="button" onclick="redirectToPayment1()">Pay $34.99</button>
+                <P>(You'll Get One Report)</P>
+            </div>
+            <div id="two">
+                <button class="button" onclick="redirectToPayment2()">Pay $44.99</button>
+                <P>(You'll Get Three Report)</P>
+            </div>
+            <div id="three">
+                <button class="button" onclick="redirectToPayment3()">Pay 54.99</button>
+                <P>(You'll Get Five Report)</P>
+            </div>
+            <!-- <button class="button" onclick="downloadPDF()">Download PDF</button> -->
+        </div>
+    </div>
+</body>
+</html>
